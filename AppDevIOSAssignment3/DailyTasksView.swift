@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ShowAllTasksView: View {
+struct DailyTasksView: View {
     
 //    var links: [String] = ["NewTask", "Calendar"]
     
@@ -40,8 +40,8 @@ struct ShowAllTasksView: View {
         .padding()
     }
 }
-struct ShowAllTasksView_Previews: PreviewProvider {
+struct DailyTasksView_Previews: PreviewProvider {
     static var previews: some View {
-        ShowAllTasksView()
+        DailyTasksView()
     }
 }
