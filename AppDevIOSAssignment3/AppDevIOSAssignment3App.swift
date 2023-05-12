@@ -9,9 +9,14 @@ import SwiftUI
 
 @main
 struct AppDevIOSAssignment3App: App {
+    
+    //inject task database
+    @StateObject private var taskController = TaskController()
+    
     var body: some Scene {
         WindowGroup {
             DailyTasksView()
+                .environment(\.managedObjectContext, taskController.container.viewContext)
         }
     }
 }
