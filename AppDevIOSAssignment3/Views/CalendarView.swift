@@ -7,21 +7,49 @@
 
 import SwiftUI
 
+//parent view (where i'm getting the date from)
 struct CalendarView: View {
-    @State private var date = Date()
+    @Environment(\.dismiss) var dismiss
+    @State private var date: Date = Date()
+    //give constants to selectedDate
+    @Binding var selectedDate: Date
+    
 
     var body: some View {
-        DatePicker(
-            "Start Date",
-            selection: $date,
-            displayedComponents: [.date]
-        )
-        .datePickerStyle(.graphical)
+        
+        VStack{
+            DatePicker(
+                "Start Date",
+                selection: $selectedDate,
+                displayedComponents: [.date]
+            )
+            .datePickerStyle(.graphical)
+            .onChange(of: date){ newDate in
+                print("date selected: \(newDate)")
+                self.selectedDate = newDate
+            }
+            
+             
+            HStack{
+                Spacer()
+                Button("Return"){
+                    dismiss()
+                }
+                Spacer()
+            }
+        }
+        
+        
+    }
+    
+    
+    private func printDate(){
+        print("date selected \($date)")
     }
 }
 
 struct CalendarView_Previews: PreviewProvider {
     static var previews: some View {
-        CalendarView()
+        CalendarView(selectedDate: .constant(Date.now))
     }
 }

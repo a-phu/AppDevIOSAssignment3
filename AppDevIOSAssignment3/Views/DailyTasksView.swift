@@ -8,14 +8,16 @@
 import SwiftUI
 import CoreData
 
+//child view - where i;m using the date
 struct DailyTasksView: View {
     @Environment(\.managedObjectContext) var managedObjContext
     @FetchRequest(sortDescriptors: [SortDescriptor(\.date, order: .reverse)]) var task: FetchedResults<Task>
     
     //hide AddNewTaskView
     @State private var showingAddNewTaskView = false
+    @State private var showingCalendarView = false
     
-    
+    @State var selectedDate: Date = Date.now
     
     
     var body: some View {
@@ -25,7 +27,7 @@ struct DailyTasksView: View {
                     ForEach(task){
                         task in
                         if task.date!.formatted(.dateTime.day().month().year())
-                            == Date.now.formatted(.dateTime.day().month().year()) {
+                            == selectedDate.formatted(.dateTime.day().month().year()) {
                             NavigationLink(destination: EditTaskView(task: task)){
                                 HStack{
                                     VStack(alignment: .leading, spacing: 6){
@@ -41,18 +43,26 @@ struct DailyTasksView: View {
                     }
                     .onDelete(perform: deleteTask)
                 }
-                //default list has default padding and is centred in middle
                 .listStyle(.plain)
               
             }
             .navigationTitle("today's to-do")
             .toolbar{
                 ToolbarItem(placement: .navigationBarTrailing){
-                    Button {
-                        showingAddNewTaskView.toggle()
-                    } label: {
-                        Label("Add New Task", systemImage: "plus.circle")
+                    HStack{
+    
+                        Button {
+                            showingCalendarView.toggle()
+                        } label: {
+                            Label("Show Calendar", systemImage: "calendar")
+                        }
+                        Button {
+                            showingAddNewTaskView.toggle()
+                        } label: {
+                            Label("Add New Task", systemImage: "plus.circle")
+                        }
                     }
+                   
                 }
                 ToolbarItem(placement: .navigationBarLeading){
                     EditButton()
@@ -61,8 +71,11 @@ struct DailyTasksView: View {
             .sheet(isPresented: $showingAddNewTaskView ){
                 AddNewTaskView()
             }
+            .sheet(isPresented: $showingCalendarView ){
+                CalendarView(selectedDate: self.$selectedDate)
+            }
         }
-        //.navigationViewStyle(.stack)
+        .navigationViewStyle(.stack)
 
     }
     private func deleteTask(offsets: IndexSet){
