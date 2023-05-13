@@ -8,13 +8,40 @@
 import SwiftUI
 
 struct EditTaskView: View {
+    
+    @Environment (\.managedObjectContext) var managedObjContext
+    @Environment(\.dismiss) var dismiss
+    
+    var task: FetchedResults<Task>.Element
+    @State private var desc = ""
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Form {
+            Section {
+                TextField("\(task.desc!)", text: $desc)
+                    .onAppear{
+                        desc = task.desc!
+                    }
+                HStack{
+                    Spacer()
+                    Button("Submit"){
+                        TaskController().editTask(task: task, description: desc, context: managedObjContext)
+                        dismiss()
+                    }
+                    Spacer()
+                }
+            }
+        }
+        
     }
 }
 
-struct EditTaskView_Previews: PreviewProvider {
-    static var previews: some View {
-        EditTaskView()
-    }
-}
+
+
+
+
+//struct EditTaskView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        EditTaskView(task: task)
+//    }
+//}

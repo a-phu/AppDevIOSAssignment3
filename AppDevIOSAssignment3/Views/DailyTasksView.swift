@@ -15,19 +15,27 @@ struct DailyTasksView: View {
     //hide AddNewTaskView
     @State private var showingAddNewTaskView = false
     
+    
+    
+    
     var body: some View {
         NavigationStack{
             VStack(alignment: .leading){
                 List {
-                    ForEach(task){task in
-                        NavigationLink(destination: Text("Task")){
-                            HStack{
-                                VStack(alignment: .leading, spacing: 6){
-                                    Text(task.desc!).bold()
+                    ForEach(task){
+                        task in
+                        if task.date!.formatted(.dateTime.day().month().year())
+                            == Date.now.formatted(.dateTime.day().month().year()) {
+                            NavigationLink(destination: EditTaskView(task: task)){
+                                HStack{
+                                    VStack(alignment: .leading, spacing: 6){
+                                        Text(task.desc!).bold()
+                                    }
+                                    Spacer()
+                                    Text("\(task.date!.formatted(.dateTime.day().month().year()) )").foregroundColor(.gray).italic()
                                 }
-                                Spacer()
-                                Text("\(task.date!.formatted(.dateTime.day().month().year()) )").foregroundColor(.gray).italic()
                             }
+                            
                         }
                         
                     }
@@ -35,7 +43,7 @@ struct DailyTasksView: View {
                 }
                 //default list has default padding and is centred in middle
                 .listStyle(.plain)
-                
+              
             }
             .navigationTitle("today's to-do")
             .toolbar{
@@ -55,7 +63,7 @@ struct DailyTasksView: View {
             }
         }
         //.navigationViewStyle(.stack)
-        
+
     }
     private func deleteTask(offsets: IndexSet){
         //pass

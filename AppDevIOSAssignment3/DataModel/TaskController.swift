@@ -17,7 +17,7 @@ class TaskController: ObservableObject {
                 print("Failed to load data \(error.localizedDescription)")
             }}
     }
-    
+        
     func saveTask(context: NSManagedObjectContext){
         do {
             try context.save()
@@ -33,7 +33,7 @@ class TaskController: ObservableObject {
         task.date = Date()
         task.desc = description
         task.completion = false
-        
+        print("date now: \(Date.now.formatted(.dateTime.day().month().year()))")
         //context label = context or else have to copy try-catch
         saveTask(context: context)
     }
