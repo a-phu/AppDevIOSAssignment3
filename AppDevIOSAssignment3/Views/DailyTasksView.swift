@@ -11,60 +11,76 @@ import CoreData
 //child view - where i;m using the date
 struct DailyTasksView: View {
     @Environment(\.managedObjectContext) var managedObjContext
-    @FetchRequest(sortDescriptors: [SortDescriptor(\.date, order: .reverse)]) var task: FetchedResults<Task>
+    @FetchRequest(sortDescriptors: [SortDescriptor(\.date, order: .reverse)]) var taskList: FetchedResults<Task>
     
     //hide AddNewTaskView
     @State private var showingAddNewTaskView = false
     @State private var showingCalendarView = false
     
     @State var selectedDate: Date = Date.now
-//    @State var weekView: WeekView = WeekView()
+    @StateObject var weekView: WeekView = WeekView()
+    @Namespace var animation
     
     var body: some View {
         NavigationStack{
-            
+
             VStack(alignment: .center){
                 Section {
                     //CURRENT WEEK VIEW
-//                    ScrollView(.horizontal, showsIndicators: false){
-//                        HStack(spacing: 10){
-//                            ForEach(weekView.currentWeek, id: \.self){day in
-//                                VStack(spacing: 10){                                    Text(weekView.extractDate(date: day, format: "EEE"))
-//                                        .font(.system(size: 14))
-//                                        .fontWeight(.semibold)
-//                                    Text(weekView.extractDate(date: day, format: "dd"))
-//                                        .font(.system(size: 14))
-//                                    Circle()
-//                                        .fill(.white)
-//                                        .frame(width: 8, height: 8)
-//                                        .opacity(weekView.isToday(date: day) ? 1 : 0)
-//                                }
-//                                .foregroundColor(.white)
-//                                .frame(width: 45, height: 90)
-//                                .background(
-//                                    ZStack{
-//                                        Capsule()
-//                                            .fill(.black)
-//                                    }
-//                                )
-//                                
-//                            }
-//                        }
-//                        .padding(.horizontal)
-//                    }
+                    ScrollView(.horizontal, showsIndicators: false){
+                        HStack(spacing: 10){
+                            ForEach(weekView.currentWeek, id: \.self){day in
+                                VStack(spacing: 10){                                    Text(weekView.extractDate(date: day, format: "EEE"))
+                                        .font(.system(size: 14))
+                                        .fontWeight(.semibold)
+                                    Text(weekView.extractDate(date: day, format: "dd"))
+                                        .font(.system(size: 14))
+                                    Circle()
+                                        .fill(.white)
+                                        .frame(width: 8, height: 8)
+                                        .opacity(weekView.isToday(date: day) ? 1 : 0)
+                                }
+                                //FOREGROUND COLOUR
+                                .foregroundStyle(weekView.isToday(date: day) ? .primary : .secondary)
+                                .foregroundColor(weekView.isToday(date: day) ? .white : .black)
+                                //CAPSULE SHAPE
+                                .frame(width: 45, height: 90)
+                                .background(
+                                    ZStack{
+                                        if weekView.isToday(date: day){
+                                            Capsule()
+                                                .fill(.black)
+                                                .matchedGeometryEffect(id: "CurrentDay", in: animation)
+                                        }
+                                    }
+                                )
+                                .contentShape(Capsule())
+                                .onTapGesture{
+                                    //UPDATING CURRENT DAY
+                                    withAnimation{
+                                        weekView.currentDay = day
+                                    }
+                                }
+                            }
+                        }
+                        
+                        .padding(.horizontal)
+                    }
                 } header: {
                     //HEADER FOR PROFILE
                     headerView()
                 }
             }.padding()
             
-            VStack(alignment: .leading){
+            //TASK LIST
+            VStack(alignment: .leading, spacing: 18){
                 List {
-                    ForEach(task){
+                    ForEach(taskList){
                         task in
                         if task.date!.formatted(.dateTime.day().month().year())
                             == selectedDate.formatted(.dateTime.day().month().year()) {
                             NavigationLink(destination: EditTaskView(task: task)){
+                                //TASK CARD
                                 HStack{
                                     VStack(alignment: .leading, spacing: 6){
                                         Text(task.desc!).bold()
@@ -75,14 +91,25 @@ struct DailyTasksView: View {
                             }
                             
                         }
+//                        else {
+////                            ProgressView().offset(y: 100)
+//                            Text("No tasks for selected date. Tap \"+\" to add a task.")
+//                                .font(.system(size: 16))
+//                                .fontWeight(.light)
+//                                .offset(y:100)
+//                        }
                         
                     }
                     .onDelete(perform: deleteTask)
+//                    .onChange(of: weekView.currentDay) {
+//                        selectedDate in weekView.filterTodayTasks()
+//                    }
                 }
                 .listStyle(.plain)
               
+                
             }
-//            .navigationTitle("today's to-do")
+
             .toolbar{
                 ToolbarItem(placement: .navigationBarTrailing){
                     HStack{
@@ -115,6 +142,7 @@ struct DailyTasksView: View {
 
     }
     
+    //HEADER
     private func headerView() -> some View{
         HStack(spacing: 10){
             VStack(alignment: .leading, spacing: 5){
@@ -122,26 +150,31 @@ struct DailyTasksView: View {
                 Text("Today").font(.largeTitle)
             }
             .hLeading()
-            
-            Button{
-                
-            } label: {
-                Image("Profile")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: 50, height: 50)
-                    .clipShape(Circle())
+           
+            VStack{
+                Button{
+                    
+                } label: {
+                    Image("Profile")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 50, height: 50)
+                        .clipShape(Circle())
+                }
             }
+            
         }
 //        .padding()
         .background(Color.white)
     }
+    
+    //DELETE TASKS
     private func deleteTask(offsets: IndexSet){
         //pass
         withAnimation{
             offsets.map {
                 //map to current position
-                task[$0]
+                taskList[$0]
             }
             //then find the current object and delete it
             .forEach(managedObjContext.delete)

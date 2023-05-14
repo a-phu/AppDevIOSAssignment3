@@ -8,9 +8,9 @@
 import SwiftUI
 
 class WeekView: ObservableObject {
-    //    var body: some View {
-    //        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    //    }
+    @Environment(\.managedObjectContext) var managedObjContext
+    @FetchRequest(sortDescriptors: [SortDescriptor(\.date, order: .reverse)]) var task: FetchedResults<Task>
+    
     
     //CURRENT WEEK
     @Published var currentWeek: [Date] = []
@@ -18,29 +18,57 @@ class WeekView: ObservableObject {
     //CURRENT DAY
     @Published var currentDay: Date = Date.now
     
+    //FILTER SELECTED DAY'S TASKS
+    @Published var filteredTasks: [Task]?
+    
+    
     init(){
-//        self.currentWeek = []
-//        self.currentDay = Date.now
-//        fetchCurrentWeek()
+        fetchCurrentWeek()
+//        filterTodayTasks()
     }
+    
+    //FILTER TODAY'S TASKS
+//    func filterTodayTasks(){
+//        DispatchQueue.global(qos: .userInteractive).async {
+//            let calendar = Calendar.current
+//            
+//            let filtered = storedTasks.filter{
+//                return calendar.isDate($0.taskDate, inSameDayAs: self.currentDay)
+//            }
+//            
+//            DispatchQueue.main.async {
+//                withAnimation{
+//                    self.filteredTasks = filtered
+//                }
+//            }
+//        }
+//    }
+//    
     
     func fetchCurrentWeek(){
         let today = Date.now
-        print("today's date \(today)")
+//        print("today's date \(today)")
         let calendar = Calendar.current
         
         let week = calendar.dateInterval(of: .weekOfMonth, for: today)
+        
+//        print("this week \(String(describing: week))")
         
         guard let firstWeekDay = week?.start else{
             return
         }
         
-        (1...7).forEach {day in
+//        print("first week day: \(firstWeekDay)")
+        
+        //start from 0 to get today's date
+        (0...6).forEach {day in
             if let weekday = calendar.date(byAdding: .day, value: day, to: firstWeekDay){
+                print("weekday \(weekday)")
                 currentWeek.append(weekday)
             }
         }
     }
+    
     
     
     //EXTRACT DAY
