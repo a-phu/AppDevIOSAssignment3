@@ -18,10 +18,46 @@ struct DailyTasksView: View {
     @State private var showingCalendarView = false
     
     @State var selectedDate: Date = Date.now
-    
+//    @State var weekView: WeekView = WeekView()
     
     var body: some View {
         NavigationStack{
+            
+            VStack(alignment: .center){
+                Section {
+                    //CURRENT WEEK VIEW
+//                    ScrollView(.horizontal, showsIndicators: false){
+//                        HStack(spacing: 10){
+//                            ForEach(weekView.currentWeek, id: \.self){day in
+//                                VStack(spacing: 10){                                    Text(weekView.extractDate(date: day, format: "EEE"))
+//                                        .font(.system(size: 14))
+//                                        .fontWeight(.semibold)
+//                                    Text(weekView.extractDate(date: day, format: "dd"))
+//                                        .font(.system(size: 14))
+//                                    Circle()
+//                                        .fill(.white)
+//                                        .frame(width: 8, height: 8)
+//                                        .opacity(weekView.isToday(date: day) ? 1 : 0)
+//                                }
+//                                .foregroundColor(.white)
+//                                .frame(width: 45, height: 90)
+//                                .background(
+//                                    ZStack{
+//                                        Capsule()
+//                                            .fill(.black)
+//                                    }
+//                                )
+//                                
+//                            }
+//                        }
+//                        .padding(.horizontal)
+//                    }
+                } header: {
+                    //HEADER FOR PROFILE
+                    headerView()
+                }
+            }.padding()
+            
             VStack(alignment: .leading){
                 List {
                     ForEach(task){
@@ -46,7 +82,7 @@ struct DailyTasksView: View {
                 .listStyle(.plain)
               
             }
-            .navigationTitle("today's to-do")
+//            .navigationTitle("today's to-do")
             .toolbar{
                 ToolbarItem(placement: .navigationBarTrailing){
                     HStack{
@@ -78,6 +114,28 @@ struct DailyTasksView: View {
         .navigationViewStyle(.stack)
 
     }
+    
+    private func headerView() -> some View{
+        HStack(spacing: 10){
+            VStack(alignment: .leading, spacing: 5){
+                Text(Date.now.formatted(date: .abbreviated, time: .omitted)).foregroundColor(.gray)
+                Text("Today").font(.largeTitle)
+            }
+            .hLeading()
+            
+            Button{
+                
+            } label: {
+                Image("Profile")
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: 50, height: 50)
+                    .clipShape(Circle())
+            }
+        }
+//        .padding()
+        .background(Color.white)
+    }
     private func deleteTask(offsets: IndexSet){
         //pass
         withAnimation{
@@ -96,5 +154,23 @@ struct DailyTasksView: View {
 struct DailyTasksView_Previews: PreviewProvider {
     static var previews: some View {
         DailyTasksView()
+    }
+}
+
+
+//Helper functions for UI
+extension View{
+    
+    func hLeading()-> some View{
+        self
+            .frame(maxWidth: .infinity, alignment: .leading)
+    }
+    func hTrailing()-> some View{
+        self
+            .frame(maxWidth: .infinity, alignment: .trailing)
+    }
+    func hCenter()-> some View{
+        self
+            .frame(maxWidth: .infinity, alignment: .center)
     }
 }

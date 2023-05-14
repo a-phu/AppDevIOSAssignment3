@@ -15,11 +15,14 @@ struct AddNewTaskView: View {
     @State private var desc = ""
     
     var body: some View {
-        
+        //add cancel button 
         Form{
             Section{
                 TextField("Enter description of task:", text: $desc)
             }
+            
+            //add tags for uni - lecture, tutorial, assignment, quiz etc
+            //allow users to choose due date
             
             HStack{
                 Spacer()
