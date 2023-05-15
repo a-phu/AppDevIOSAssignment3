@@ -26,7 +26,7 @@ struct IntroView: View {
                 
                 
                 NavigationLink{
-                    DailyView()
+                    LoginView()
                 } label: {
                     Text("Tap to continue")
                 }
@@ -38,7 +38,7 @@ struct IntroView: View {
                 ) .weight(.bold)
                 )
             }
-        } .navigationBarBackButtonHidden(true) 
+        }.accentColor(.black)
     }
 }
 

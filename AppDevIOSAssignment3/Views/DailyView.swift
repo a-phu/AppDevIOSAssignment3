@@ -11,22 +11,17 @@ struct DailyView: View {
     @Environment(\.managedObjectContext) var managedObjContext
     @FetchRequest(sortDescriptors: [SortDescriptor(\.date, order: .reverse)]) var taskList: FetchedResults<Task>
     @State var selectedDate: Date = Date.now
+    @State private var date = Date()
     @Namespace var animation
-    @StateObject var weekView: WeekView = WeekView()
     @State private var showingAddNewTaskView = false
     @State private var showingCalendarView = false
     
-    
-    init(){
-    }
-    
+
     var body: some View {
         NavigationStack{
             VStack{
                 HeaderView()
-//                WeeklyView()
                 DailyTasksView()
-                //                NoTasksView()
                 Spacer()
                 VStack(alignment: .trailing) {
                     HStack (spacing: 30){
@@ -34,7 +29,6 @@ struct DailyView: View {
                                .frame(width: 230)
                         //ADD NEW TASK BUTTON
                         Button {
-                            // action
                             showingAddNewTaskView.toggle()
                         } label: {
                             Image("AddButton")
@@ -47,19 +41,12 @@ struct DailyView: View {
                     .frame(maxWidth: .infinity, alignment: .trailing)
                 }
 
-                
             }
             //TOOLBAR
             .toolbar{
                 ToolbarItem(placement: .navigationBarTrailing){
                     HStack{
-                        Button {
-                            //                        showingCalendarView.toggle()
-                        } label: {
-                            Image(systemName: "house.fill")
-                                .resizable()
-                                .frame(width: 30, height: 30)
-                        }.foregroundColor(.black)
+                        EditButton().foregroundColor(.black)
                         Button {
                             showingCalendarView.toggle()
                         } label: {
@@ -67,20 +54,7 @@ struct DailyView: View {
                                 .resizable()
                                 .frame(width: 30, height: 30)
                         }.foregroundColor(.black)
-                        Button {
-                            
-                        } label: {
-                            Image(systemName: "gear")
-                                .resizable()
-                                .frame(width: 30, height: 30)
-                        }.foregroundColor(.black)
-                        
                     }
-                    
-                }
-                ToolbarItem(placement: .navigationBarLeading){
-                    EditButton().foregroundColor(.black)
-
                 }
 
                 
@@ -88,8 +62,7 @@ struct DailyView: View {
                 AddNewTaskView()
             }
             .sheet(isPresented: $showingCalendarView ){
-                CalendarView(selectedDate: self.$selectedDate).onAppear{
-                    print("calendar view appeared")
+                CalendarView().onAppear{
                 }
             }
             
@@ -99,100 +72,22 @@ struct DailyView: View {
         
     }
     
-    private func WeeklyView() -> some View{
-        Section {
-            ScrollView(.horizontal, showsIndicators: false){
-                HStack(spacing: 10){
-                    ForEach(weekView.currentWeek, id: \.self){day in
-                        VStack(spacing: 10){             Text(weekView.extractDate(date: day, format: "EEE"))
-                                .font(.system(size: 14))
-                                .fontWeight(.semibold)
-                            Text(weekView.extractDate(date: day, format: "dd"))
-                                .font(.system(size: 14))
-                            Circle()
-                                .fill(.white)
-                                .frame(width: 8, height: 8)
-                                .opacity(weekView.isToday(date: day) ? 1 : 0)
-                        }
-                        //FOREGROUND COLOUR
-                        .foregroundStyle(weekView.isToday(date: day) ? .primary : .secondary)
-                        .foregroundColor(weekView.isToday(date: day) ? .white : .black)
-                        //CAPSULE SHAPE
-                        .frame(width: 45, height: 90)
-                        .background(
-                            ZStack{
-                                if weekView.isToday(date: day){
-                                    Capsule()
-                                        .fill(.black)
-                                        .matchedGeometryEffect(id: "CurrentDay", in: animation)
-                                }
-                            }
-                        )
-                        .contentShape(Capsule())
-                        .onTapGesture{
-                            //UPDATING CURRENT DAY
-                            withAnimation{
-                                weekView.currentDay = day
-                                selectedDate = day
-                            }
-                        }
-                    }
-                }
-
-            }
-        }
-    }
-    
     private func HeaderView() -> some View{
-        HStack(spacing: 10){
-            VStack(alignment: .leading, spacing: 5){
+        HStack(spacing: 15){
+            VStack(alignment: .leading, spacing: 10){
                 Text("Today's to-do").font(.largeTitle).foregroundColor(.black)
-                Text(selectedDate.formatted(date: .abbreviated, time: .omitted)).foregroundColor(.gray)
-                
+                DatePicker("Enter date", selection: $selectedDate, displayedComponents: [.date]).labelsHidden()
+
             }
             .hLeading()
         }
         .background(Color.white)
         .padding()
     }
-    
-    private func NoTasksView() -> some View{
-        
-            VStack(alignment: .center, spacing: 20){
-                Spacer()
-                       .frame(height: 100)
-                HStack{
-                    Image("HighFive")
-                }
-                VStack{
-                    Text("No tasks left for today")
-                        .font(
-                            .title2
-                                .weight(.bold)
-                        )
-                    Text("Tap + to add a new task")
-                }
-                
-            }
-        
-        .background(Color.white)
-        .padding()
-    }
+
     
     private func TaskCardView(task: Task) -> some View{
         HStack (alignment: .top, spacing: 30){
-            
-//            VStack(spacing: 10){
-////                Circle()
-////                    .fill(.black)
-////                    .frame(width: 15, height: 15)
-////                    .background(
-////                        Circle()
-////                            .stroke(.black, lineWidth: 1)
-////                            .padding(-3)
-////                    )
-//
-//            }
             VStack{
                 HStack(alignment: .top, spacing: 10){
                     VStack(alignment: .leading, spacing: 12){
@@ -200,7 +95,7 @@ struct DailyView: View {
                     }
                     Spacer()
                     Text("\(task.date!.formatted(.dateTime.day().month().year()) )").foregroundColor(.gray).italic()
-                }.background(Color.pink)
+                }
             }
             
         }
@@ -253,5 +148,22 @@ struct DailyView: View {
 struct DailyView_Previews: PreviewProvider {
     static var previews: some View {
         DailyView()
+    }
+}
+
+//Helper functions for UI
+extension View{
+    
+    func hLeading()-> some View{
+        self
+            .frame(maxWidth: .infinity, alignment: .leading)
+    }
+    func hTrailing()-> some View{
+        self
+            .frame(maxWidth: .infinity, alignment: .trailing)
+    }
+    func hCenter()-> some View{
+        self
+            .frame(maxWidth: .infinity, alignment: .center)
     }
 }
