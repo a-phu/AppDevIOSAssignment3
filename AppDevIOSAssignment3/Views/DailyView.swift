@@ -18,7 +18,6 @@ struct DailyView: View {
     
     
     init(){
-        self._taskList = FetchRequest(sortDescriptors: [SortDescriptor(\.date, order: .reverse)], predicate: NSPredicate(format: "date >= %@ && date <= %@", Calendar.current.startOfDay(for: selectedDate) as CVarArg, Calendar.current.startOfDay(for: selectedDate + 86400) as CVarArg))
     }
     
     var body: some View {
@@ -69,7 +68,7 @@ struct DailyView: View {
                                 .frame(width: 30, height: 30)
                         }.foregroundColor(.black)
                         Button {
-                            showingAddNewTaskView.toggle()
+                            
                         } label: {
                             Image(systemName: "gear")
                                 .resizable()
@@ -183,17 +182,17 @@ struct DailyView: View {
     private func TaskCardView(task: Task) -> some View{
         HStack (alignment: .top, spacing: 30){
             
-            VStack(spacing: 10){
-                Circle()
-                    .fill(.black)
-                    .frame(width: 15, height: 15)
-                    .background(
-                        Circle()
-                            .stroke(.black, lineWidth: 1)
-                            .padding(-3)
-                    )
-            
-            }
+//            VStack(spacing: 10){
+////                Circle()
+////                    .fill(.black)
+////                    .frame(width: 15, height: 15)
+////                    .background(
+////                        Circle()
+////                            .stroke(.black, lineWidth: 1)
+////                            .padding(-3)
+////                    )
+//
+//            }
             VStack{
                 HStack(alignment: .top, spacing: 10){
                     VStack(alignment: .leading, spacing: 12){
@@ -201,7 +200,7 @@ struct DailyView: View {
                     }
                     Spacer()
                     Text("\(task.date!.formatted(.dateTime.day().month().year()) )").foregroundColor(.gray).italic()
-                }
+                }.background(Color.pink)
             }
             
         }
@@ -225,6 +224,7 @@ struct DailyView: View {
     }
     
     private func DailyTasksView() -> some View{
+        
         VStack(alignment: .leading, spacing: 18){
             
             List{
@@ -241,6 +241,7 @@ struct DailyView: View {
                     }
                     
                 }
+
                 .onDelete(perform: deleteTask)
             }
             

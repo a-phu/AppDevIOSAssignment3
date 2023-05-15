@@ -219,10 +219,10 @@
             filePath = "AppDevIOSAssignment3/Views/DailyView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "252"
-            endingLineNumber = "252"
-            landmarkName = "DailyView_Previews"
-            landmarkType = "14">
+            startingLineNumber = "253"
+            endingLineNumber = "253"
+            landmarkName = "previews"
+            landmarkType = "24">
             <Locations>
                <Location
                   uuid = "5160956A-1281-4493-A07E-808EF8C933E8 - 5123746694659277"
