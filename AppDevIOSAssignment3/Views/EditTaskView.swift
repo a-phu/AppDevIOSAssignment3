@@ -14,6 +14,7 @@ struct EditTaskView: View {
     
     var task: FetchedResults<Task>.Element
     @State private var desc = ""
+    @State private var date = Date()
     
     var body: some View {
         Form {
@@ -22,10 +23,24 @@ struct EditTaskView: View {
                     .onAppear{
                         desc = task.desc!
                     }
+                VStack(alignment: .leading){
+                    HStack{
+                        Text("Enter due date:")
+                        Spacer()
+                        DatePicker("", selection: $date, displayedComponents: [.date]).labelsHidden()
+                    }
+                }
                 HStack{
                     Spacer()
                     Button("Submit"){
-                        TaskController().editTask(task: task, description: desc, context: managedObjContext)
+                        TaskController().editTask(task: task, desc: desc, date: date, context: managedObjContext)
+                        dismiss()
+                    }
+                    Spacer()
+                }
+                HStack{
+                    Spacer()
+                    Button("Cancel"){
                         dismiss()
                     }
                     Spacer()

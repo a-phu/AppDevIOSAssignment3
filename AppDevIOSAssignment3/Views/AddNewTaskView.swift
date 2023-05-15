@@ -13,12 +13,22 @@ struct AddNewTaskView: View {
     @Environment(\.dismiss) var dismiss
     
     @State private var desc = ""
+    @State private var date = Date()
     
     var body: some View {
         //add cancel button 
         Form{
             Section{
                 TextField("Enter description of task:", text: $desc)
+                VStack(alignment: .leading){
+                    HStack{
+                        Text("Enter due date:")
+                        Spacer()
+                        DatePicker("Enter due date of task", selection: $date, displayedComponents: [.date]).labelsHidden()
+                    }
+                }
+                
+                
             }
             
             //add tags for uni - lecture, tutorial, assignment, quiz etc
@@ -27,7 +37,14 @@ struct AddNewTaskView: View {
             HStack{
                 Spacer()
                 Button("Add new task"){
-                    TaskController().addTask(description: desc, context: managedObjContext)
+                    TaskController().addTask(desc: desc, date: date, context: managedObjContext)
+                    dismiss()
+                }
+                Spacer()
+            }
+            HStack{
+                Spacer()
+                Button("Cancel"){
                     dismiss()
                 }
                 Spacer()

@@ -27,20 +27,20 @@ class TaskController: ObservableObject {
         }
     }
     
-    func addTask(description: String, context: NSManagedObjectContext){
+    func addTask(desc: String, date: Date, context: NSManagedObjectContext){
         let task = Task(context: context)
         task.id = UUID()
-        task.date = Date()
-        task.desc = description
+        task.date = date
+        task.desc = desc
         task.completion = false
         print("date now: \(Date.now.formatted(.dateTime.day().month().year()))")
         //context label = context or else have to copy try-catch
         saveTask(context: context)
     }
     
-    func editTask(task: Task, description: String, context: NSManagedObjectContext){
-        task.date = Date()
-        task.desc = description
+    func editTask(task: Task, desc: String, date: Date, context: NSManagedObjectContext){
+        task.date = date
+        task.desc = desc
         task.completion = false
         
         saveTask(context: context)

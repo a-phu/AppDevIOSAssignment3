@@ -8,10 +8,7 @@
 import SwiftUI
 
 class WeekView: ObservableObject {
-    @Environment(\.managedObjectContext) var managedObjContext
-    @FetchRequest(sortDescriptors: [SortDescriptor(\.date, order: .reverse)]) var task: FetchedResults<Task>
-    
-    
+
     //CURRENT WEEK
     @Published var currentWeek: [Date] = []
     
@@ -21,49 +18,29 @@ class WeekView: ObservableObject {
     //FILTER SELECTED DAY'S TASKS
     @Published var filteredTasks: [Task]?
     
+    @State var selectedDate: Date = Date.now
+    
     
     init(){
         fetchCurrentWeek()
-//        filterTodayTasks()
     }
-    
-    //FILTER TODAY'S TASKS
-//    func filterTodayTasks(){
-//        DispatchQueue.global(qos: .userInteractive).async {
-//            let calendar = Calendar.current
-//            
-//            let filtered = storedTasks.filter{
-//                return calendar.isDate($0.taskDate, inSameDayAs: self.currentDay)
-//            }
-//            
-//            DispatchQueue.main.async {
-//                withAnimation{
-//                    self.filteredTasks = filtered
-//                }
-//            }
-//        }
-//    }
-//    
-    
+
+
     func fetchCurrentWeek(){
         let today = Date.now
 //        print("today's date \(today)")
         let calendar = Calendar.current
         
         let week = calendar.dateInterval(of: .weekOfMonth, for: today)
-        
-//        print("this week \(String(describing: week))")
-        
+            
         guard let firstWeekDay = week?.start else{
             return
         }
         
-//        print("first week day: \(firstWeekDay)")
-        
         //start from 0 to get today's date
         (0...6).forEach {day in
             if let weekday = calendar.date(byAdding: .day, value: day, to: firstWeekDay){
-                print("weekday \(weekday)")
+//                print("weekday \(weekday)")
                 currentWeek.append(weekday)
             }
         }

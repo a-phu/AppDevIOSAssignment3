@@ -10,27 +10,32 @@ import CoreData
 
 //child view - where i;m using the date
 struct DailyTasksView: View {
+    
     @Environment(\.managedObjectContext) var managedObjContext
+//    @FetchRequest(
+//        sortDescriptors: [SortDescriptor(\.date, order: .reverse)],
+//        predicate: NSPredicate(format: "date >= %@ && date <= %@", Calendar.current.startOfDay(for: Date() - 86400) as CVarArg, Calendar.current.startOfDay(for: Date() + 86400) as CVarArg)) var taskList: FetchedResults<Task>
     @FetchRequest(sortDescriptors: [SortDescriptor(\.date, order: .reverse)]) var taskList: FetchedResults<Task>
     
     //hide AddNewTaskView
     @State private var showingAddNewTaskView = false
     @State private var showingCalendarView = false
+//    @State private var predicate : NSPredicate
     
-    @State var selectedDate: Date = Date.now
+    
     @StateObject var weekView: WeekView = WeekView()
+    @State var selectedDate: Date = Date.now
     @Namespace var animation
     
     var body: some View {
         NavigationStack{
-
-            VStack(alignment: .center){
+            //CURRENT WEEK VIEW
+            LazyVStack(spacing: 15, pinnedViews: [.sectionHeaders]){
                 Section {
-                    //CURRENT WEEK VIEW
                     ScrollView(.horizontal, showsIndicators: false){
                         HStack(spacing: 10){
                             ForEach(weekView.currentWeek, id: \.self){day in
-                                VStack(spacing: 10){                                    Text(weekView.extractDate(date: day, format: "EEE"))
+                                VStack(spacing: 10){             Text(weekView.extractDate(date: day, format: "EEE"))
                                         .font(.system(size: 14))
                                         .fontWeight(.semibold)
                                     Text(weekView.extractDate(date: day, format: "dd"))
@@ -59,55 +64,37 @@ struct DailyTasksView: View {
                                     //UPDATING CURRENT DAY
                                     withAnimation{
                                         weekView.currentDay = day
+                                        selectedDate = day
                                     }
                                 }
                             }
                         }
-                        
-                        .padding(.horizontal)
+
                     }
                 } header: {
                     //HEADER FOR PROFILE
-                    headerView()
+                    HeaderView()
                 }
             }.padding()
             
             //TASK LIST
             VStack(alignment: .leading, spacing: 18){
-                List {
-                    ForEach(taskList){
+                    
+                
+                    ForEach(taskList, id: \.self){
                         task in
-                        if task.date!.formatted(.dateTime.day().month().year())
-                            == selectedDate.formatted(.dateTime.day().month().year()) {
+                        if (task.date!.formatted(.dateTime.day().month().year())
+                            == selectedDate.formatted(.dateTime.day().month().year()))
+                        {
                             NavigationLink(destination: EditTaskView(task: task)){
                                 //TASK CARD
-                                HStack{
-                                    VStack(alignment: .leading, spacing: 6){
-                                        Text(task.desc!).bold()
-                                    }
-                                    Spacer()
-                                    Text("\(task.date!.formatted(.dateTime.day().month().year()) )").foregroundColor(.gray).italic()
-                                }
+                                TaskCardView(task: task)
                             }
                             
                         }
-//                        else {
-////                            ProgressView().offset(y: 100)
-//                            Text("No tasks for selected date. Tap \"+\" to add a task.")
-//                                .font(.system(size: 16))
-//                                .fontWeight(.light)
-//                                .offset(y:100)
-//                        }
                         
                     }
                     .onDelete(perform: deleteTask)
-//                    .onChange(of: weekView.currentDay) {
-//                        selectedDate in weekView.filterTodayTasks()
-//                    }
-                }
-                .listStyle(.plain)
-              
-                
             }
 
             .toolbar{
@@ -118,36 +105,70 @@ struct DailyTasksView: View {
                             showingCalendarView.toggle()
                         } label: {
                             Label("Show Calendar", systemImage: "calendar")
-                        }
+                        }.foregroundColor(.black)
                         Button {
                             showingAddNewTaskView.toggle()
                         } label: {
                             Label("Add New Task", systemImage: "plus.circle")
-                        }
+                        }.foregroundColor(.black)
+
                     }
                    
                 }
                 ToolbarItem(placement: .navigationBarLeading){
-                    EditButton()
+                    EditButton().foregroundColor(.black)
+
                 }
+                
             }
             .sheet(isPresented: $showingAddNewTaskView ){
                 AddNewTaskView()
             }
             .sheet(isPresented: $showingCalendarView ){
-                CalendarView(selectedDate: self.$selectedDate)
+                CalendarView(selectedDate: self.$selectedDate).onAppear{
+                    print("calendar view appeared")
+                }
             }
+            Spacer()
         }
         .navigationViewStyle(.stack)
 
     }
-    
+    //TASK CARD VIEW
+    func TaskCardView(task: Task) -> some View{
+        HStack (alignment: .top, spacing: 30){
+            
+            VStack(spacing: 10){
+                Circle()
+                    .fill(.black)
+                    .frame(width: 15, height: 15)
+                    .background(
+                        Circle()
+                            .stroke(.black, lineWidth: 1)
+                            .padding(-3)
+                    )
+            
+            }
+            VStack{
+                HStack(alignment: .top, spacing: 10){
+                    VStack(alignment: .leading, spacing: 12){
+                        Text(task.desc!)
+                    }
+                    Spacer()
+                    Text("\(task.date!.formatted(.dateTime.day().month().year()) )").foregroundColor(.gray).italic()
+                }
+            }
+            
+        }
+        .hLeading()
+        .padding(.horizontal)
+    }
     //HEADER
-    private func headerView() -> some View{
+    private func HeaderView() -> some View{
         HStack(spacing: 10){
             VStack(alignment: .leading, spacing: 5){
                 Text(Date.now.formatted(date: .abbreviated, time: .omitted)).foregroundColor(.gray)
-                Text("Today").font(.largeTitle)
+                Text("Today").font(.largeTitle).foregroundColor(.black)
             }
             .hLeading()
            
@@ -164,7 +185,6 @@ struct DailyTasksView: View {
             }
             
         }
-//        .padding()
         .background(Color.white)
     }
     
@@ -183,7 +203,18 @@ struct DailyTasksView: View {
             TaskController().saveTask(context: managedObjContext)
         }
     }
+    
+    private func taskListIsEmpty(entity: String) -> Bool {
+        do {
+            let request = NSFetchRequest<NSFetchRequestResult>(entityName: entity)
+            let count  = try managedObjContext.count(for: request)
+            return count == 0
+        } catch {
+            return true
+        }
+    }
 }
+
 struct DailyTasksView_Previews: PreviewProvider {
     static var previews: some View {
         DailyTasksView()

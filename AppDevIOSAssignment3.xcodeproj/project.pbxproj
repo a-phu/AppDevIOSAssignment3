@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B22EE29F2A11943D007763B7 /* IntroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22EE29E2A11943D007763B7 /* IntroView.swift */; };
+		B22EE2A12A11A11A007763B7 /* DailyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22EE2A02A11A11A007763B7 /* DailyView.swift */; };
 		B2BF269D2A0B06A3007363AE /* AppDevIOSAssignment3App.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BF269C2A0B06A3007363AE /* AppDevIOSAssignment3App.swift */; };
 		B2BF269F2A0B06A3007363AE /* DailyTasksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BF269E2A0B06A3007363AE /* DailyTasksView.swift */; };
 		B2BF26A12A0B06A5007363AE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2BF26A02A0B06A5007363AE /* Assets.xcassets */; };
@@ -15,7 +17,6 @@
 		B2BF26AD2A0CB75C007363AE /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BF26AC2A0CB75C007363AE /* CalendarView.swift */; };
 		B2BF26AF2A0CBBFC007363AE /* TaskController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BF26AE2A0CBBFB007363AE /* TaskController.swift */; };
 		B2BF26B32A0CBF33007363AE /* TaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BF26B22A0CBF33007363AE /* TaskView.swift */; };
-		B2BF26B52A0CE590007363AE /* TaskListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BF26B42A0CE58F007363AE /* TaskListController.swift */; };
 		B2BF26BA2A0E13EA007363AE /* TaskDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B2BF26B82A0E13EA007363AE /* TaskDataModel.xcdatamodeld */; };
 		B2BF26BC2A0E21A7007363AE /* EditTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BF26BB2A0E21A7007363AE /* EditTaskView.swift */; };
 		B2BF26C12A105D95007363AE /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BF26C02A105D95007363AE /* LoginView.swift */; };
@@ -23,6 +24,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B22EE29E2A11943D007763B7 /* IntroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroView.swift; sourceTree = "<group>"; };
+		B22EE2A02A11A11A007763B7 /* DailyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyView.swift; sourceTree = "<group>"; };
 		B2BF26992A0B06A3007363AE /* AppDevIOSAssignment3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AppDevIOSAssignment3.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2BF269C2A0B06A3007363AE /* AppDevIOSAssignment3App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDevIOSAssignment3App.swift; sourceTree = "<group>"; };
 		B2BF269E2A0B06A3007363AE /* DailyTasksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyTasksView.swift; sourceTree = "<group>"; };
@@ -32,7 +35,6 @@
 		B2BF26AC2A0CB75C007363AE /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		B2BF26AE2A0CBBFB007363AE /* TaskController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskController.swift; sourceTree = "<group>"; };
 		B2BF26B22A0CBF33007363AE /* TaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskView.swift; sourceTree = "<group>"; };
-		B2BF26B42A0CE58F007363AE /* TaskListController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListController.swift; sourceTree = "<group>"; };
 		B2BF26B92A0E13EA007363AE /* TaskDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TaskDataModel.xcdatamodel; sourceTree = "<group>"; };
 		B2BF26BB2A0E21A7007363AE /* EditTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTaskView.swift; sourceTree = "<group>"; };
 		B2BF26C02A105D95007363AE /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -90,7 +92,6 @@
 			isa = PBXGroup;
 			children = (
 				B2BF26AE2A0CBBFB007363AE /* TaskController.swift */,
-				B2BF26B42A0CE58F007363AE /* TaskListController.swift */,
 				B2BF26B82A0E13EA007363AE /* TaskDataModel.xcdatamodeld */,
 			);
 			path = DataModel;
@@ -104,8 +105,10 @@
 				B2BF26C02A105D95007363AE /* LoginView.swift */,
 				B2BF26B22A0CBF33007363AE /* TaskView.swift */,
 				B2BF26AA2A0CB711007363AE /* AddNewTaskView.swift */,
-				B2BF26AC2A0CB75C007363AE /* CalendarView.swift */,
 				B2BF26BB2A0E21A7007363AE /* EditTaskView.swift */,
+				B2BF26AC2A0CB75C007363AE /* CalendarView.swift */,
+				B22EE29E2A11943D007763B7 /* IntroView.swift */,
+				B22EE2A02A11A11A007763B7 /* DailyView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -180,8 +183,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B22EE2A12A11A11A007763B7 /* DailyView.swift in Sources */,
 				B2BF26C52A10687E007363AE /* WeekView.swift in Sources */,
-				B2BF26B52A0CE590007363AE /* TaskListController.swift in Sources */,
 				B2BF269F2A0B06A3007363AE /* DailyTasksView.swift in Sources */,
 				B2BF26B32A0CBF33007363AE /* TaskView.swift in Sources */,
 				B2BF269D2A0B06A3007363AE /* AppDevIOSAssignment3App.swift in Sources */,
@@ -190,6 +193,7 @@
 				B2BF26BA2A0E13EA007363AE /* TaskDataModel.xcdatamodeld in Sources */,
 				B2BF26AD2A0CB75C007363AE /* CalendarView.swift in Sources */,
 				B2BF26C12A105D95007363AE /* LoginView.swift in Sources */,
+				B22EE29F2A11943D007763B7 /* IntroView.swift in Sources */,
 				B2BF26AB2A0CB711007363AE /* AddNewTaskView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -62,8 +62,8 @@
             filePath = "AppDevIOSAssignment3/Views/WeekView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "26"
-            endingLineNumber = "26"
+            startingLineNumber = "25"
+            endingLineNumber = "25"
             landmarkName = "init()"
             landmarkType = "7">
             <Locations>
@@ -148,54 +148,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "2DEF1823-AC46-4B72-ACFA-72A79FC7E27A"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "AppDevIOSAssignment3/Views/WeekView.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "56"
-            endingLineNumber = "56"
-            landmarkName = "fetchCurrentWeek()"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "2DEF1823-AC46-4B72-ACFA-72A79FC7E27A - 8d5222fff3bc4574"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "AppDevIOSAssignment3.WeekView.fetchCurrentWeek() -&gt; ()"
-                  moduleName = "AppDevIOSAssignment3"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/annabelphu/Documents/42889%20App%20Dev%20in%20ioS/AppDevIOSAssignment3/AppDevIOSAssignment3/Views/WeekView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "33"
-                  endingLineNumber = "33"
-                  offsetFromSymbolStart = "1972">
-               </Location>
-               <Location
-                  uuid = "2DEF1823-AC46-4B72-ACFA-72A79FC7E27A - 8d5222fff3bc4557"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "AppDevIOSAssignment3.WeekView.fetchCurrentWeek() -&gt; ()"
-                  moduleName = "AppDevIOSAssignment3"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/annabelphu/Documents/42889%20App%20Dev%20in%20ioS/AppDevIOSAssignment3/AppDevIOSAssignment3/Views/WeekView.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "34"
-                  endingLineNumber = "34"
-                  offsetFromSymbolStart = "1120">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "3DAD54A4-02F5-479A-99A5-250AC36A655B"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -203,8 +155,8 @@
             filePath = "AppDevIOSAssignment3/Views/WeekView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "78"
-            endingLineNumber = "78"
+            startingLineNumber = "55"
+            endingLineNumber = "55"
             landmarkName = "extractDate(date:format:)"
             landmarkType = "7">
             <Locations>
@@ -237,6 +189,70 @@
                   startingLineNumber = "50"
                   endingLineNumber = "50"
                   offsetFromSymbolStart = "172">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "600F2710-6202-4F12-9531-318F0694204F"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AppDevIOSAssignment3/Views/WeekView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "57"
+            endingLineNumber = "57"
+            landmarkName = "extractDate(date:format:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5160956A-1281-4493-A07E-808EF8C933E8"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "AppDevIOSAssignment3/Views/DailyView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "252"
+            endingLineNumber = "252"
+            landmarkName = "DailyView_Previews"
+            landmarkType = "14">
+            <Locations>
+               <Location
+                  uuid = "5160956A-1281-4493-A07E-808EF8C933E8 - 5123746694659277"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "static AppDevIOSAssignment3.DailyView_Previews.previews.getter : some"
+                  moduleName = "AppDevIOSAssignment3"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/annabelphu/Documents/42889%20App%20Dev%20in%20ioS/AppDevIOSAssignment3/AppDevIOSAssignment3/Views/DailyView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "211"
+                  endingLineNumber = "211"
+                  offsetFromSymbolStart = "100">
+               </Location>
+               <Location
+                  uuid = "5160956A-1281-4493-A07E-808EF8C933E8 - 9df9f79ee01d664f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "AppDevIOSAssignment3.DailyView_Previews.init() -&gt; AppDevIOSAssignment3.DailyView_Previews"
+                  moduleName = "AppDevIOSAssignment3"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/annabelphu/Documents/42889%20App%20Dev%20in%20ioS/AppDevIOSAssignment3/AppDevIOSAssignment3/Views/DailyView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "210"
+                  endingLineNumber = "210"
+                  offsetFromSymbolStart = "0">
                </Location>
             </Locations>
          </BreakpointContent>

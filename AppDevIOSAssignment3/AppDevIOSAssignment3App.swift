@@ -15,8 +15,9 @@ struct AppDevIOSAssignment3App: App {
     
     var body: some Scene {
         WindowGroup {
-            DailyTasksView()
-                .environment(\.managedObjectContext, taskController.container.viewContext)
+//            DailyTasksView()
+//                .environment(\.managedObjectContext, taskController.container.viewContext)
+            IntroView().environment(\.managedObjectContext, taskController.container.viewContext)
         }
     }
 }
